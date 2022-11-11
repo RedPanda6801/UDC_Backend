@@ -1,7 +1,7 @@
 // 지역 DB를 따로 두는 걸로 하자. 조회가 많기 때문
 const Sequelize = require("sequelize");
 
-module.exports = class CommentLike extends Sequelize.Model {
+module.exports = class PostLike extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {},
@@ -9,8 +9,8 @@ module.exports = class CommentLike extends Sequelize.Model {
         sequelize,
         timestamps: true,
         underscored: false,
-        modelName: "CommentLike",
-        tableName: "CommentLikes",
+        modelName: "PostLike",
+        tableName: "PostLikes",
         paranoid: true,
         charset: "utf8",
         collate: "utf8_general_ci",
@@ -19,7 +19,7 @@ module.exports = class CommentLike extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.CommentLike.belongsTo(db.Comment);
-    db.CommentLike.belongsTo(db.User);
+    db.PostLike.belongsTo(db.Post);
+    db.PostLike.belongsTo(db.User);
   }
 };

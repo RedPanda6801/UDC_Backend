@@ -5,24 +5,16 @@ module.exports = class Post extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        name: {
-          type: Sequelize.STRING(10),
-          allowNull: false,
-        },
-        email: {
+        title: {
           type: Sequelize.STRING(50),
           allowNull: false,
         },
-        userId: {
-          type: Sequelize.STRING(15),
+        context: {
+          type: Sequelize.STRING(500),
           allowNull: false,
         },
-        password: {
+        image: {
           type: Sequelize.STRING(100),
-          allowNull: false,
-        },
-        nickname: {
-          type: Sequelize.STRING(8),
           allowNull: false,
         },
         report: {
@@ -43,5 +35,12 @@ module.exports = class Post extends Sequelize.Model {
     );
   }
 
-  static associate(db) {}
+  static associate(db) {
+    db.Post.belongsTo(db.User);
+    db.Post.hasMany(db.Comment);
+    db.Post.hasMany(db.PostLike);
+    db.Post.hasMany(db.PostDislike);
+    db.Post.belongsTo(db.Category);
+    db.Post.belongsTo(db.Hashtag);
+  }
 };

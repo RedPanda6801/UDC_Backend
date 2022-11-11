@@ -4,32 +4,7 @@ const Sequelize = require("sequelize");
 module.exports = class CommentDislike extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
-      {
-        name: {
-          type: Sequelize.STRING(10),
-          allowNull: false,
-        },
-        email: {
-          type: Sequelize.STRING(50),
-          allowNull: false,
-        },
-        userId: {
-          type: Sequelize.STRING(15),
-          allowNull: false,
-        },
-        password: {
-          type: Sequelize.STRING(100),
-          allowNull: false,
-        },
-        nickname: {
-          type: Sequelize.STRING(8),
-          allowNull: false,
-        },
-        report: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-        },
-      },
+      {},
       {
         sequelize,
         timestamps: true,
@@ -43,5 +18,8 @@ module.exports = class CommentDislike extends Sequelize.Model {
     );
   }
 
-  static associate(db) {}
+  static associate(db) {
+    db.CommentDislike.belongsTo(db.Comment);
+    db.CommentDislike.belongsTo(db.User);
+  }
 };

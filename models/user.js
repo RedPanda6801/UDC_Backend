@@ -44,8 +44,13 @@ module.exports = class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.User.hasMany(db.Cafe);
-    db.User.hasMany(db.Question);
-    db.User.hasMany(db.Solution);
+    db.User.hasMany(db.Post);
+    db.User.hasMany(db.PostDislike);
+    db.User.hasMany(db.PostLike);
+    db.User.hasMany(db.Comment);
+    db.User.hasMany(db.CommentDislike);
+    db.User.hasMany(db.CommentLike);
+    db.User.hasMany(db.Reply);
+    // report에 대한 연관관계 설정 안함
   }
 };
