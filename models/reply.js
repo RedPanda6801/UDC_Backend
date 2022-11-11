@@ -5,24 +5,8 @@ module.exports = class Reply extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        name: {
-          type: Sequelize.STRING(10),
-          allowNull: false,
-        },
-        email: {
-          type: Sequelize.STRING(50),
-          allowNull: false,
-        },
-        userId: {
-          type: Sequelize.STRING(15),
-          allowNull: false,
-        },
-        password: {
+        context: {
           type: Sequelize.STRING(100),
-          allowNull: false,
-        },
-        nickname: {
-          type: Sequelize.STRING(8),
           allowNull: false,
         },
         report: {
@@ -43,5 +27,8 @@ module.exports = class Reply extends Sequelize.Model {
     );
   }
 
-  static associate(db) {}
+  static associate(db) {
+    db.Reply.belongsTo(db.Comment);
+    db.Reply.belongsTo(db.User);
+  }
 };
