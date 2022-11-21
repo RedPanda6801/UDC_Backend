@@ -7,7 +7,7 @@ module.exports = class CommentReport extends Sequelize.Model {
       {
         commentReportDetail: {
           type: Sequelize.INTEGER,
-          allowNull: true, 
+          allowNull: true,
         },
       },
       {
@@ -24,7 +24,6 @@ module.exports = class CommentReport extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.CommentReport.belongsTo(db.Comment)
-    db.CommentReport.belongsTo(db.Report)
+    db.CommentReport.belongsTo(db.Comment);
   }
 };

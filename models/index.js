@@ -3,16 +3,18 @@ const env = process.env.NODE_ENV || "development";
 const config = require("../config/config")[env];
 
 const User = require("./user");
+const UserReport = require("./userreport");
 const Post = require("./post");
 const PostLike = require("./postlike");
 const PostDislike = require("./postdislike");
+const PostReport = require("./postreport");
 const Comment = require("./comment");
 const CommentLike = require("./commentlike");
 const CommentDislike = require("./commentdislike");
+const CommentReport = require("./commentreport");
 const Hashtag = require("./hashtag");
 const Category = require("./category");
 const Reply = require("./reply");
-const Report = require("./report");
 
 const db = {};
 const sequelize = new Sequelize(
@@ -33,7 +35,9 @@ db.CommentDislike = CommentDislike;
 db.Hashtag = Hashtag;
 db.Category = Category;
 db.Reply = Reply;
-db.Report = Report;
+db.CommentReport = CommentReport;
+db.PostReport = PostReport;
+db.UserReport = UserReport;
 
 User.init(sequelize);
 Post.init(sequelize);
@@ -45,7 +49,9 @@ CommentDislike.init(sequelize);
 Hashtag.init(sequelize);
 Category.init(sequelize);
 Reply.init(sequelize);
-Report.init(sequelize);
+UserReport.init(sequelize);
+CommentReport.init(sequelize);
+PostReport.init(sequelize);
 
 User.associate(db);
 Post.associate(db);
@@ -57,6 +63,8 @@ CommentDislike.associate(db);
 Hashtag.associate(db);
 Category.associate(db);
 Reply.associate(db);
-Report.associate(db);
+CommentReport.associate(db);
+UserReport.associate(db);
+PostReport.associate(db);
 
 module.exports = db;

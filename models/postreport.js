@@ -7,7 +7,7 @@ module.exports = class PostReport extends Sequelize.Model {
       {
         postReportDetail: {
           type: Sequelize.INTEGER,
-          allowNull: true, 
+          allowNull: true,
         },
       },
       {
@@ -24,7 +24,6 @@ module.exports = class PostReport extends Sequelize.Model {
   }
 
   static associate(db) {
-   db.PostReport.belongsTo(db.Post) 
-   db.PostReport.belongsTo(db.Report) 
+    db.PostReport.belongsTo(db.Post);
   }
 };
