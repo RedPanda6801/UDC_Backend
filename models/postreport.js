@@ -1,21 +1,21 @@
 // 지역 DB를 따로 두는 걸로 하자. 조회가 많기 때문
 const Sequelize = require("sequelize");
 
-module.exports = class Report extends Sequelize.Model {
+module.exports = class PostReport extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        details: {
+        postReportDetail: {
           type: Sequelize.INTEGER,
-          allowNull: false, 
+          allowNull: true, 
         },
       },
       {
         sequelize,
         timestamps: true,
         underscored: false,
-        modelName: "Report",
-        tableName: "Reports",
+        modelName: "PostReport",
+        tableName: "PostReports",
         paranoid: true,
         charset: "utf8",
         collate: "utf8_general_ci",
@@ -24,6 +24,7 @@ module.exports = class Report extends Sequelize.Model {
   }
 
   static associate(db) {
-
+   db.PostReport.belongsTo(db.Post) 
+   db.PostReport.belongsTo(db.Report) 
   }
 };
