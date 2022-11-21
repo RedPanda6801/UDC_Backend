@@ -13,7 +13,7 @@ const {sequelize} = require('./models');
 dotenv.config();
 
 const app = express();
-app.set('port', process.env.PORT);
+app.set('port', process.env.PORT || 8080);
 
 sequelize.sync({force: false})
     .then(()=>{
@@ -31,8 +31,6 @@ app.use('/', express.static(path.join(__dirname, 'public')));   //approach to st
 app.use(express.json());                          //body parser  use req.body
 app.use(express.urlencoded({extended: false}));   
 
-  app.use(passport.initialize());
-  app.use(passport.session());
 
 
   app.listen(app.get('port'), () => {       //specify port

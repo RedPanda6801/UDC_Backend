@@ -18,5 +18,9 @@ module.exports = class PostDislike extends Sequelize.Model {
     );
   }
 
-  static associate(db) {}
+  static associate(db) {
+    db.PostDislike.belongsTo(db.Post);
+    db.PostDislike.belongsTo(db.User);
+  }
+
 };
