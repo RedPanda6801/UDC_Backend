@@ -1,4 +1,10 @@
 const { User } = require('../models');
+// import jwt for use jwt token
+const jwt = require('jsonwebtoken');
+
+// import bcrypt for password hashing
+const bcrypt = require('bcrypt');
+
 
 
 // for signUp
@@ -38,7 +44,8 @@ exports.signIn = async(req, res, next)=>{
                 return res.sendStatus(400);
             }
         }else{
-            return res.sendStatus(400);        }
+            return res.sendStatus(400);
+        }
     } catch (error) {
         return res.sendStatus(400);
     }
