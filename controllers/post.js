@@ -52,6 +52,7 @@ exports.createPost = async (req, res, next) => {
       context,
       image: image ? image : null,
       report: 0,
+      view: 0,
     });
     console.log("Create Success");
     return res.status(200).json({

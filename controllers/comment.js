@@ -34,8 +34,11 @@ exports.createComment = async (req, res, next) => {
 exports.updateComment = async (req, res, next) => {
   try {
     // 받아온 데이터를 변수에 저장
-    const { postId } = req.params;
+    const { commentId } = req.params;
     const { context } = req.body;
+    // 본인 댓글인지 확인
+
+    //
   } catch (error) {
     console.error(error);
     next(error);
@@ -44,7 +47,17 @@ exports.updateComment = async (req, res, next) => {
 exports.deleteComment = async (req, res, next) => {
   try {
     // 받아온 데이터르 변수에 저장
-    const { postId } = req.params;
+    const { commentId } = req.params;
+    // 본인 댓글인지 확인
+
+    // 댓글 삭제
+    const deleteUserComment = await Comment.destroy({
+      where: { id: commentId },
+    });
+    console.log("Delete Success");
+    return res.status(200).json({
+      message: "Delete Success",
+    });
   } catch (error) {
     console.error(error);
     next(error);

@@ -17,6 +17,10 @@ module.exports = class Post extends Sequelize.Model {
           type: Sequelize.STRING(100),
           allowNull: true,
         },
+        views: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
         report: {
           type: Sequelize.INTEGER,
           allowNull: false,
