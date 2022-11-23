@@ -13,19 +13,27 @@ exports.signUp = async(req, res, next)=>{
     try {
         const { name, email, userId, password, nickname } = req.body;
         const isUser = await User.findOne({where:{ userId }});
-        if(isUser){
-            return res.sendStatus(400);
+        if (!isUser){
+            await User.create({
+                name,
+                email,
+                userId,
+                password,
+                nickname,
+            })
+            return res.Status(201).json({
+                message: "회원 가입 성공!",
+            });
+        }else{
+            res.Status(400).json({
+                message: "회원 정보를 확인 해주세요!"
+            })
         }
-        await User.create({
-            name,
-            email,
-            userId,
-            password,
-            nickname,
-        })
-        return res.sendStatus(201);
+        
     } catch (error) {
-        return res.sendStatus(404);
+        return res.Status(404).json({
+            
+        });
     }
 }
 

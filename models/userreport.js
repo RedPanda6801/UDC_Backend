@@ -7,7 +7,7 @@ module.exports = class UserReport extends Sequelize.Model {
       {
         userReportDetail: {
           type: Sequelize.INTEGER,
-          allowNull: true, 
+          allowNull: true,
         },
       },
       {
@@ -24,7 +24,6 @@ module.exports = class UserReport extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.UserReport.belongsTo(db.Report);
     db.UserReport.belongsTo(db.User);
   }
 };

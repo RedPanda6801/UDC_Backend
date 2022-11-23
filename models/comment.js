@@ -5,20 +5,8 @@ module.exports = class Comment extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        name: {
-          type: Sequelize.STRING(10),
-          allowNull: false,
-        },
-        email: {
-          type: Sequelize.STRING(50),
-          allowNull: false,
-        },
-        password: {
-          type: Sequelize.STRING(100),
-          allowNull: false,
-        },
-        nickname: {
-          type: Sequelize.STRING(8),
+        context: {
+          type: Sequelize.STRING(300),
           allowNull: false,
         },
         report: {
