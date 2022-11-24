@@ -1,4 +1,4 @@
-const { Post } = require("../models");
+const { Post, User } = require("../models");
 
 // 게시물 전체 조회 API(카테고리 별로 조회가 가장 큰 범주 인듯)
 exports.searchPost = async (req, res, next) => {
@@ -33,6 +33,7 @@ exports.searchOnePost = async (req, res, next) => {
     return res.status(200).json({
       message: "Find One Success",
       data: post,
+      mypost: post.UserId === req.decoded.id,
     });
   } catch (error) {
     console.error(error);
@@ -44,11 +45,14 @@ exports.searchOnePost = async (req, res, next) => {
 exports.createPost = async (req, res, next) => {
   try {
     // body에 담긴 데이터를 변수에 저장
-    const { title, userId, context, image } = req.body;
+    const { title, context, image } = req.body;
+    // 유저 확인 (유저를 DB에서 찾는 작업은 jwt에서 처리)
+    const loginUser = await User.findOne({ where: { id: req.decoded.id } });
+
     // 이미지가 있으면 넣고 아니면 null이 되는 기본 게시글 추가
     const newPost = await Post.create({
       title,
-      UserId: userId,
+      UserId: loginUser.userId,
       context,
       image: image ? image : null,
       report: 0,
@@ -70,7 +74,7 @@ exports.updatePost = async (req, res, next) => {
     // 받은 데이터들을 변수에 저장
     const { postId } = req.params;
     const { title, context, image } = req.body;
-    // 게시물 찾기
+    // 게시물 검색
     const lastPost = await Post.findOne({ where: { id: postId } });
     // 게시물이 없으면 에러 처리
     if (!lastPost) {
@@ -78,6 +82,10 @@ exports.updatePost = async (req, res, next) => {
       return res.status(404).json({
         message: "Post is Not Found",
       });
+      // 게시물 작성자와 로그인한 사람이 다르면
+    } else if (lastPost.UserId !== req.decoded.id) {
+      console.error("Forbidden Error");
+      return res.status(403).json({ message: "Forbidden Error" });
     }
     // 게시물 수정(제목, 내용, 사진)
     const updateUserPost = await Post.update({
@@ -100,13 +108,20 @@ exports.deletePost = async (req, res, next) => {
   try {
     // 데이터에서 받은 값 변수에 저장
     const { postId } = req.params;
-    // 게시물 찾기
-    if (!(await Post.findOne({ where: { id: postId } }))) {
+    // 해당 게시물과 작성자 찾기
+    const post = await Post.findOne({ where: { id: postId } });
+    // 게시물이 없으면
+    if (!post) {
       console.error("Post is Not Found");
       return res.status(404).json({
         message: "Post is Not Found",
       });
+      // 게시자와 로그인한 사람이 다르면
+    } else if (post.UserId !== req.decoded.id) {
+      console.error("Forbidden Error");
+      return res.status(403).json({ message: "Forbidden Error" });
     }
+    // 게시물 삭제
     const deleteUserPost = await Post.destroy({
       where: { id: postId },
     });

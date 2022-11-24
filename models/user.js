@@ -25,6 +25,11 @@ module.exports = class User extends Sequelize.Model {
           type: Sequelize.STRING(8),
           allowNull: false,
         },
+        isAdmin: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false,
+          defaultValue: false,
+        },
         report: {
           type: Sequelize.INTEGER,
           allowNull: false,
