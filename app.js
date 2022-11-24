@@ -8,6 +8,7 @@ const morgan = require("morgan"); //morgan
 const dotenv = require("dotenv");
 
 const { sequelize } = require("./models");
+const authRouter = require("./routes/auth")
 const commentRouter = require("./routes/comment");
 const postRouter = require("./routes/post");
 dotenv.config();
@@ -24,6 +25,7 @@ sequelize
     console.error(err);
   });
 
+app.use("/auth", authRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
 // app.use("/reply", reply);
@@ -39,3 +41,4 @@ app.listen(app.get("port"), () => {
   //specify port
   console.log(app.get("port"), "번 포트에서 대기중");
 });
+
